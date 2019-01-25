@@ -44,7 +44,7 @@ the
 The contained smart contract is based on the 
 [Ion Interoperability Framework](https://github.com/clearmatics/ion)
 
-The associated Java smart contract wrappers reflect their respective smart contracts.
+The associated Java smart contract wrappers reflect their respective Solidity smart contracts.
 
 For more background on smart contracts, refer to the 
 [smart contracts](https://docs.web3j.io/smart_contracts.html) section of the docs.
