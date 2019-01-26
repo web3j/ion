@@ -15,7 +15,6 @@ import org.web3j.tx.gas.DefaultGasProvider;
  * <ol>
  *     <li>Connecting to a node on the Ethereum network</li>
  *     <li>Loading an Ethereum wallet file</li>
- *     <li>Sending Ether from one address to another</li>
  *     <li>Deploying the Ion smart contract to the network</li>
  * </ol>
  *
@@ -62,5 +61,6 @@ public class Application {
                 web3j, credentials,
                 new DefaultGasProvider(),
                 web3j.netVersion().send().getNetVersion().getBytes()).send();
+        log.info("Ion contract deployed");
     }
 }

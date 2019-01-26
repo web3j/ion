@@ -1,10 +1,8 @@
-# web3j Sample Project
+# web3j Sample Ion Project
 
-This project provides a very simple starter application for working with web3j and the test 
-Ethereum network (testnet) known as Rinkeby.
+This project provides a very simple starter application for working with web3j and the [Ion Interoperability Framework](https://github.com/clearmatics/ion) using an Ethereum network (testnet) known as Rinkeby.
 
-The demo deploys a *hello world* smart contract which contains a greeting message. The current 
-greeting message can be read and modified in the smart contract.  
+The demo deploys the *Ion* smart contract.
 
 In order to run this demo, three pieces of information are required:
 
@@ -23,17 +21,13 @@ This application demonstrates a number of core features of web3j and Ethereum:
 
 - Connecting to a node on the Ethereum network
 - Loading an Ethereum wallet file
-- Sending Ether from one address to another
-- Deploying a smart contract to the network
-- Reading a value from the deployed smart contract
-- Updating a value in the deployed smart contract
-- Viewing an event logged by the smart contract
+- Deploying the [Ion Interoperability Framework](https://github.com/clearmatics/ion)
 
 
 ## Background
 
 This application has purposefully been kept as simple as possible with the aim of demonstrating 
-how to deploy and work with a smart contract on the decentralised Ethereum network.
+how to deploy the [Ion Interoperability Framework](https://github.com/clearmatics/ion) on a decentralised Ethereum network.
 
 If you require further background information about the above configuration items for the project
 you can refer to the below.
@@ -44,13 +38,13 @@ the
 [YouTube](https://youtube.com/watch?v=ea3miXs_P6Y) talk, and read all of the 
 [documentation](https://docs.web3j.io).
 
+
 ### Smart contracts
 
 The contained smart contract is based on the 
-[Greeter contract example](https://www.ethereum.org/greeter), with the addition that the value 
-stored in the Greeter can be modified.
+[Ion Interoperability Framework](https://github.com/clearmatics/ion)
 
-The associated Java smart contract wrapper is named Greeter.
+The associated Java smart contract wrappers reflect their respective Solidity smart contracts.
 
 For more background on smart contracts, refer to the 
 [smart contracts](https://docs.web3j.io/smart_contracts.html) section of the docs.
