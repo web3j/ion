@@ -45,8 +45,6 @@ public class Application {
         // Note: if using web3j Android, use Web3jFactory.build(...
         Web3j web3j = Web3j.build(new HttpService(
                 "https://rinkeby.infura.io/<your token>"));  // FIXME: Enter your Infura token or node url here;
-        log.info("Connected to Ethereum client version: "
-                + web3j.web3ClientVersion().send().getWeb3ClientVersion());
 
         // We then need to load our Ethereum wallet file
         // FIXME: Generate a new wallet file using the web3j command line tools https://docs.web3j.io/command_line.html
@@ -60,7 +58,9 @@ public class Application {
         Ion ion = Ion.deploy(
                 web3j, credentials,
                 new DefaultGasProvider(),
-                web3j.netVersion().send().getNetVersion().getBytes()).send();
+                "MyBlockChainId".getBytes()).send();
         log.info("Ion contract deployed");
+
+
     }
 }

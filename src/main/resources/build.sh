@@ -1,10 +1,14 @@
 #!/usr/bin/env bash
 
+cd ../java
+outDir=`pwd`
 cd ../solidity
+allowPaths=`pwd`
 
 targets="
-./validation/Base
-./Ion
+Ion
+validation/Base
+storage/EthereumStore
 "
 
 for target in ${targets}; do
@@ -13,7 +17,7 @@ for target in ${targets}; do
 
     cd $dirName
     echo "Compiling Solidity files in ${dirName}:"
-    solc --bin --abi --optimize --overwrite ${fileName}.sol -o build/
+    solc --bin --abi --optimize --overwrite --allow-paths ${allowPaths} `pwd`/${fileName}.sol -o build/
     echo "Complete"
 
     echo "Generating web3j bindings"
@@ -21,7 +25,7 @@ for target in ${targets}; do
         -b build/${fileName}.bin \
         -a build/${fileName}.abi \
         -p org.web3j.generated \
-        -o ../java/ > /dev/null
+        -o ${outDir} > /dev/null
     echo "Complete"
 
     cd -

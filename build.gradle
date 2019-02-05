@@ -19,7 +19,7 @@ ext {
 dependencies {
     compile "ch.qos.logback:logback-core:$logbackVersion",
             "ch.qos.logback:logback-classic:$logbackVersion",
-            "org.web3j:web3j-gradle-plugin:4.0.3"
+            "org.web3j:core:4.1.1"
     
     testCompile "junit:junit:$junitVersion"
 }
