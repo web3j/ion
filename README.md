@@ -46,6 +46,8 @@ The contained smart contract is based on the
 
 The associated Java smart contract wrappers reflect their respective Solidity smart contracts.
 
+You should use /resource/build.sh to compile the contracts
+
 For more background on smart contracts, refer to the 
 [smart contracts](https://docs.web3j.io/smart_contracts.html) section of the docs.
 

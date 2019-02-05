@@ -2,9 +2,9 @@
 // SPDX-License-Identifier: LGPL-3.0+
 pragma solidity ^0.4.23;
 
-import "./RLP.sol";
-import "./SolidityUtils.sol";
-import "./EventVerifier.sol";
+import "../libraries/RLP.sol";
+import "../libraries/SolidityUtils.sol";
+import "../EventVerifier.sol";
 
 /*
     TriggerEventVerifier
@@ -21,7 +21,7 @@ import "./EventVerifier.sol";
 contract TriggerEventVerifier is EventVerifier {
     bytes32 eventSignature = keccak256("Triggered(address)");
 
-    function verify(bytes20 _contractEmittedAddress, bytes _rlpReceipt, bytes20 _expectedAddress) public returns (bool) {
+    function verify(bytes20 _contractEmittedAddress, bytes _rlpReceipt, bytes20 _expectedAddress) public view returns (bool) {
         // Retrieve specific log for given event signature
         RLP.RLPItem[] memory log = retrieveLog(eventSignature, _contractEmittedAddress, _rlpReceipt);
 

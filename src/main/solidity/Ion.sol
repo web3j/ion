@@ -2,11 +2,11 @@
 // SPDX-License-Identifier: LGPL-3.0+
 pragma solidity ^0.4.23;
 
-import "./ECVerify.sol";
-import "./RLP.sol";
-import "./PatriciaTrie.sol";
-import "./SolidityUtils.sol";
-import "./BlockStore.sol";
+import "./libraries/ECVerify.sol";
+import "./libraries/RLP.sol";
+import "./libraries/PatriciaTrie.sol";
+import "./libraries/SolidityUtils.sol";
+import "./storage/BlockStore.sol";
 
 contract Ion {
 
@@ -39,7 +39,7 @@ contract Ion {
     }
 
     // Pseudo-modifier returns boolean, used with different 'require's to input custom revert messages
-    function isContract(address _addr) internal returns (bool) {
+    function isContract(address _addr) internal view returns (bool) {
         uint size;
         assembly { size := extcodesize(_addr) }
         return (size > 0);
@@ -64,10 +64,10 @@ contract Ion {
     * param:
     *
     */
-    function storeBlock(address _storageAddress, bytes32 _chainId, bytes32 _blockHash, bytes _blockBlob) onlyRegisteredValidation public {
+    function storeBlock(address _storageAddress, bytes32 _chainId, bytes _blockBlob) onlyRegisteredValidation public {
         require( isContract(_storageAddress), "Storage address provided is not contract.");
         BlockStore store = BlockStore(_storageAddress);
 
-        store.addBlock(_chainId, _blockHash, _blockBlob);
+        store.addBlock(_chainId, _blockBlob);
     }
 }

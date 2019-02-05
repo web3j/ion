@@ -6,7 +6,7 @@ import org.web3j.crypto.Credentials;
 import org.web3j.crypto.WalletUtils;
 import org.web3j.protocol.Web3j;
 import org.web3j.protocol.http.HttpService;
-import org.web3j.sample.contracts.generated.Ion;
+import org.web3j.generated.Ion;
 import org.web3j.tx.gas.DefaultGasProvider;
 
 /**
