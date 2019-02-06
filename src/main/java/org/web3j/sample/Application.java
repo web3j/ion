@@ -3,7 +3,7 @@ package org.web3j.sample;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.web3j.crypto.Credentials;
-import org.web3j.crypto.WalletUtils;
+import org.web3j.crypto.Hash;
 import org.web3j.generated.Base;
 import org.web3j.generated.EthereumStore;
 import org.web3j.protocol.Web3j;
@@ -48,27 +48,34 @@ public class Application {
         Web3j web3j = Web3j.build(new HttpService(
                 "https://rinkeby.infura.io/<your token>"));  // FIXME: Enter your Infura token or node url here;
 
-        // We then need to load our Ethereum wallet file
-        // FIXME: Generate a new wallet file using the web3j command line tools https://docs.web3j.io/command_line.html
-        Credentials credentials =
-                WalletUtils.loadCredentials(
-                        "<password>",
-                        "/path/to/<walletfile>");
+        /** We then need to create a credentials object
+         You can use WalletUtils to load Credentials from a WalletFile
+         !!BE CAREFUL WHEN HANDLING YOUR PRIVATE KEY!!
+         The address of these credentials is 0x716c1b5ac5422b4e7089b223e3e64543624eb336
+         It is funded on Rinkeby
+         **/
+        Credentials credentials = Credentials.create("C48BCA3858EA492480A6E3C1BA72B86C632B8AC102027BB632B19708CDDFE078");
         log.info("Credentials loaded");
+
+        byte[] ionChainId = Hash.sha3String("MYCHAINID").substring(0, 32).getBytes();
 
         // Deploying Ion contract
         Ion ion = Ion.deploy(
                 web3j, credentials,
                 new DefaultGasProvider(),
-                "MyBlockChainId".getBytes()).send();
+                ionChainId).send();
         log.info("Ion contract deployed");
 
+        // Deploying Ethereum store contract
+        // You may need a different implementation depending on you DLT
         EthereumStore ethereumStore = EthereumStore.deploy(
                 web3j, credentials,
                 new DefaultGasProvider(),
                 ion.getContractAddress()).send();
         log.info("EthereumStore contract deployed");
 
+        // Deploying Base Validation
+        // You may want to use a custom Validation contract for your consensus mechanism
         Base baseValidation = Base.deploy(
                 web3j, credentials,
                 new DefaultGasProvider(),
