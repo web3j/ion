@@ -14,6 +14,10 @@ In order to run this demo, three pieces of information are required:
 
 Once these details have been added to the main Application class, you'll be good to go.
 
+Below is a diagram with a high level overview of how components interact with the Ion framework.
+
+![alt text](https://raw.githubusercontent.com/web3j/ion/master/doc/images/ion_mermaid.png "Ion framework mermaid diagram")
+
 
 ## Functionality
 
