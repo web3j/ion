@@ -13,6 +13,7 @@ import org.web3j.rlp.RlpList
 import org.web3j.rlp.RlpString
 import org.web3j.rlp.RlpType
 import org.web3j.tx.gas.DefaultGasProvider
+import org.web3j.utils.Bytes
 import org.web3j.utils.Numeric
 import java.util.ArrayList
 import java.util.stream.Collectors
@@ -111,7 +112,7 @@ class Application {
         // Submit the block from blockchain1 that contains the event you are interested in to
         // Ion on blockchain2
         val interestingBlock = blockchain1.ethGetBlockByHash(triggerReceipt.blockHash, true).send().block
-        baseValidation.SubmitBlock(ionChainId, interestingBlock.toRlp(), ethereumStore.contractAddress).send()
+        baseValidation.SubmitBlock(ionChainId, interestingBlock.blockHeaderRlp(), ethereumStore.contractAddress).send()
 
         // TODO: Here you need to wait for the ethereum store contract to fire block stored event
         //  but this is an internal transaction so event is not stored on blockchain
@@ -136,55 +137,23 @@ class Application {
     }
 }
 
-fun EthBlock.Block.toRlp(): ByteArray {
+fun EthBlock.Block.blockHeaderRlp(): ByteArray {
     val result = ArrayList<RlpType>()
-    result.add(RlpString.create(number))
-    result.add(RlpString.create(hash))
-    result.add(RlpString.create(parentHash))
-    result.add(RlpString.create(nonce))
-    result.add(RlpString.create(sha3Uncles))
-    result.add(RlpString.create(logsBloom))
-    result.add(RlpString.create(transactionsRoot))
-    result.add(RlpString.create(stateRoot))
-    result.add(RlpString.create(receiptsRoot))
-    result.add(RlpString.create(author))
-    result.add(RlpString.create(miner))
-    result.add(RlpString.create(mixHash))
-    result.add(RlpString.create(difficulty))
-    result.add(RlpString.create(totalDifficulty))
-    result.add(RlpString.create(extraData))
-    result.add(RlpString.create(size))
-    result.add(RlpString.create(gasLimit))
-    result.add(RlpString.create(gasUsed))
-    result.add(RlpString.create(timestamp))
-    result.add(RlpList(transactions.stream().map {
-        it as EthBlock.TransactionObject
-        val transactionResult = ArrayList<RlpType>()
-        transactionResult.add(RlpString.create(it.hash))
-        transactionResult.add(RlpString.create(it.nonce))
-        transactionResult.add(RlpString.create(it.blockHash))
-        transactionResult.add(RlpString.create(it.blockNumber))
-        transactionResult.add(RlpString.create(it.transactionIndex))
-        transactionResult.add(RlpString.create(it.from))
-        transactionResult.add(RlpString.create(it.to))
-        transactionResult.add(RlpString.create(it.value))
-        transactionResult.add(RlpString.create(it.gasPrice))
-        transactionResult.add(RlpString.create(it.gas))
-        transactionResult.add(RlpString.create(it.input))
-        transactionResult.add(RlpString.create(it.creates))
-        transactionResult.add(RlpString.create(it.publicKey))
-        transactionResult.add(RlpString.create(it.raw))
-        transactionResult.add(RlpString.create(it.r))
-        transactionResult.add(RlpString.create(it.s))
-        transactionResult.add(RlpString.create(it.v))
-        RlpList(transactionResult)
-    }.collect(Collectors.toList()) as List<RlpType>))
-    result.add(RlpList(uncles.stream().map {
-        RlpString.create(it)
-    } as RlpType))
-    result.add(RlpList(sealFields.stream().map {
-        RlpString.create(it)
-    } as RlpType))
+    result.add(RlpString.create(Numeric.hexStringToByteArray(parentHash)))
+    result.add(RlpString.create(Numeric.hexStringToByteArray(sha3Uncles)))
+    result.add(RlpString.create(Numeric.hexStringToByteArray(miner)))
+    result.add(RlpString.create(Numeric.hexStringToByteArray(stateRoot)))
+    result.add(RlpString.create(Numeric.hexStringToByteArray(transactionsRoot)))
+    result.add(RlpString.create(Numeric.hexStringToByteArray(receiptsRoot)))
+    result.add(RlpString.create(Numeric.hexStringToByteArray(logsBloom)))
+    result.add(RlpString.create(Numeric.toBytesPadded(difficulty, difficulty.toString().length)))
+    result.add(RlpString.create(Numeric.toBytesPadded(number, number.toString().length)))
+    result.add(RlpString.create(Bytes.trimLeadingZeroes(Numeric.toBytesPadded(gasLimit, gasLimit.toString().length))))
+    result.add(RlpString.create(Numeric.toBytesPadded(gasUsed, gasUsed.toString().length)))
+    result.add(RlpString.create(Bytes.trimLeadingZeroes(Numeric.toBytesPadded(timestamp, timestamp.toString().length))))
+    result.add(RlpString.create(Numeric.hexStringToByteArray(extraData)))
+    result.add(RlpString.create(Numeric.hexStringToByteArray(mixHash)))
+    result.add(RlpString.create(Numeric.toBytesPadded(nonce, 8)))
     return RlpEncoder.encode(RlpList(result))
 }
 
