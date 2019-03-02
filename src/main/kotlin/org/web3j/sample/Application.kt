@@ -15,8 +15,7 @@ import org.web3j.rlp.RlpType
 import org.web3j.tx.gas.DefaultGasProvider
 import org.web3j.utils.Bytes
 import org.web3j.utils.Numeric
-import java.util.ArrayList
-import java.util.stream.Collectors
+import java.util.*
 
 /**
  * A simple web3j application that demonstrates a number of core features of web3j:

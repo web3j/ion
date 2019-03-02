@@ -1,13 +1,9 @@
 package org.web3j.sample
 
 import org.bouncycastle.util.encoders.Hex
-import org.junit.Assert.*
+import org.junit.Assert.assertEquals
 import org.junit.Test
-import org.web3j.protocol.Web3j
-import org.web3j.protocol.core.DefaultBlockParameter
 import org.web3j.protocol.core.methods.response.EthBlock
-import org.web3j.protocol.http.HttpService
-import java.math.BigInteger
 
 class ApplicationTest {
     // Taken from clearmatics/ion rlp_test.go
