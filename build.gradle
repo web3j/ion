@@ -1,11 +1,20 @@
 plugins {
     id 'java'
+    id 'org.jetbrains.kotlin.jvm' version '1.3.21'
+    id 'org.web3j' version '4.1.2'
 }
 
 group 'org.web3j'
 version '0.1.1'
 
 sourceCompatibility = 1.8
+
+compileKotlin {
+    kotlinOptions.jvmTarget = "1.8"
+}
+compileTestKotlin {
+    kotlinOptions.jvmTarget = "1.8"
+}
 
 repositories {
     mavenCentral()
@@ -16,9 +25,15 @@ ext {
     junitVersion = '4.12'
 }
 
+web3j {
+    generatedPackageName = 'org.web3j.generated'
+    excludedContracts = ['Mortal']
+}
+
 dependencies {
     compile "ch.qos.logback:logback-core:$logbackVersion",
             "ch.qos.logback:logback-classic:$logbackVersion",
+            "org.jetbrains.kotlin:kotlin-stdlib-jdk8",
             "org.web3j:core:4.1.1"
     
     testCompile "junit:junit:$junitVersion"
