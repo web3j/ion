@@ -2,13 +2,12 @@ package org.web3j.sample
 
 import org.bouncycastle.util.encoders.Hex
 import org.junit.Assert.assertEquals
+import org.junit.Ignore
 import org.junit.Test
 import org.web3j.protocol.Web3j
 import org.web3j.protocol.core.DefaultBlockParameter
 import org.web3j.protocol.core.methods.response.EthBlock
-import org.web3j.protocol.core.methods.response.TransactionReceipt
 import org.web3j.protocol.http.HttpService
-import org.web3j.utils.Numeric
 
 class ApplicationTest {
     // Taken from clearmatics/ion rlp_test.go
@@ -46,34 +45,42 @@ class ApplicationTest {
         assertEquals(EXPECTED_RLP_BLOCK, Hex.toHexString(ACTUAL_BLOCK.blockHeaderRlp()))
     }
 
+    // FIXME: work in progress
+    @Ignore
     @Test
     fun generateProofTest() {
         val web3j = Web3j.build(HttpService("https://rinkeby.infura.io/v3/41c8d0234db44c429d9b7f6bb29874ae"))
         val txHash = "0xafc3ab60059ed38e71c7f6bea036822abe16b2c02fcf770a4f4b5fffcbfe6e7e"
-        val txHashBytes = Numeric.hexStringToByteArray("afc3ab60059ed38e71c7f6bea036822abe16b2c02fcf770a4f4b5fffcbfe6e7e")
 
-
-        val tx = web3j.ethGetTransactionByHash("0xafc3ab60059ed38e71c7f6bea036822abe16b2c02fcf770a4f4b5fffcbfe6e7e").send().transaction.get()
+        val tx = web3j.ethGetTransactionByHash(txHash).send().transaction.get()
         val blockNumber = tx.blockNumber
         val block = web3j.ethGetBlockByNumber(DefaultBlockParameter.valueOf(blockNumber), true).send().block
         val transactions = block.transactions
-                .map {it.get() as EthBlock.TransactionObject}
+                .map { it.get() as EthBlock.TransactionObject }
                 .toList()
-        val txTrie = null /*generateTxTrie(transactions)*/
-        val blockReceipts = listOf<TransactionReceipt>() /*getBlockTxReceipts(transactions)*/
-        val receiptsTrie = null /*generateReceiptsTrie()*/
+        val txTrie = Trie.buildTransactionTrie(transactions)
 
-        val idx = transactions
-                .single { it.hash == txHash }
-                .transactionIndexRaw
+        assertEquals(block.transactionsRoot, txTrie.rootHash)
 
-        val txPath = null /*Numeric.hexStringToByteArray(idx)*/
-        val txRlp = tx.toRlp()
-        val txProofRlp = null /*proofRlp(txTrie, txPath)*/
-        val receiptRlp = blockReceipts
-                .single { it.transactionHash == txHash }
-                .toRlp()
-        val receiptProofRlp = null /*proofRlp(receiptTrie, txPath)*/
+        val blockReceipts = transactions.map { t ->
+            web3j.ethGetTransactionReceipt(t.hash).send().transactionReceipt.get()
+        }.toList()
+        val receiptsTrie = Trie.buildReceiptTrie(blockReceipts)
+        assertEquals(block.receiptsRoot, receiptsTrie.rootHash)
+
+
+        //TODO
+//        val idx = transactions
+//                .single { it.hash == txHash }
+//                .transactionIndexRaw
+//
+//        val txPath = null /*Numeric.hexStringToByteArray(idx)*/
+//        val txRlp = tx.toRlp()
+//        val txProofRlp = null /*proofRlp(txTrie, txPath)*/
+//        val receiptRlp = blockReceipts
+//                .single { it.transactionHash == txHash }
+//                .toRlp()
+//        val receiptProofRlp = null /*proofRlp(receiptTrie, txPath)*/
 
         // Decode txRlp, txProofRlp, txReceiptRlp, receiptProofRlp
 
