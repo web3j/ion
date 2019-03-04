@@ -9,7 +9,12 @@ import org.web3j.rlp.RlpList
 import org.web3j.rlp.RlpString
 import org.web3j.rlp.RlpType
 import org.web3j.utils.Numeric
+import java.math.BigInteger
 import java.util.ArrayList
+
+fun BigInteger.toRlp(): ByteArray {
+    return RlpEncoder.encode(RlpString.create(this))
+}
 
 fun EthBlock.Block.blockHeaderRlp(): ByteArray {
     val result = ArrayList<RlpType>()
@@ -51,14 +56,13 @@ fun Log.toRlpType(): RlpType {
 fun Transaction.toRlp(): ByteArray {
     val result = ArrayList<RlpType>()
     result.add(RlpString.create(Numeric.hexStringToByteArray(nonceRaw)))
-    result.add(RlpString.create(Numeric.hexStringToByteArray(gasPriceRaw)))
     result.add(RlpString.create(Numeric.hexStringToByteArray(gasRaw)))
+    result.add(RlpString.create(Numeric.hexStringToByteArray(gasPriceRaw)))
     result.add(RlpString.create(Numeric.hexStringToByteArray(to)))
     result.add(RlpString.create(Numeric.hexStringToByteArray(valueRaw)))
     result.add(RlpString.create(Numeric.hexStringToByteArray(input)))
-    result.add(RlpString.create(Numeric.hexStringToByteArray(v.toString())))
+    result.add(RlpString.create(Numeric.hexStringToByteArray(Numeric.toHexStringWithPrefix(BigInteger.valueOf(v)))))
     result.add(RlpString.create(Numeric.hexStringToByteArray(r)))
     result.add(RlpString.create(Numeric.hexStringToByteArray(s)))
-    result.add(RlpString.create(Numeric.hexStringToByteArray(hash)))
     return RlpEncoder.encode(RlpList(result))
 }
