@@ -6,16 +6,9 @@ import org.junit.Test
 import org.web3j.protocol.Web3j
 import org.web3j.protocol.core.DefaultBlockParameter
 import org.web3j.protocol.core.methods.response.EthBlock
-import org.web3j.protocol.core.methods.response.Log
-import org.web3j.protocol.core.methods.response.Transaction
 import org.web3j.protocol.core.methods.response.TransactionReceipt
 import org.web3j.protocol.http.HttpService
-import org.web3j.rlp.RlpEncoder
-import org.web3j.rlp.RlpList
-import org.web3j.rlp.RlpString
-import org.web3j.rlp.RlpType
 import org.web3j.utils.Numeric
-import java.util.ArrayList
 
 class ApplicationTest {
     // Taken from clearmatics/ion rlp_test.go
