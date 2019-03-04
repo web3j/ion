@@ -136,26 +136,6 @@ class Application {
     }
 }
 
-fun EthBlock.Block.blockHeaderRlp(): ByteArray {
-    val result = ArrayList<RlpType>()
-    result.add(RlpString.create(Numeric.hexStringToByteArray(parentHash)))
-    result.add(RlpString.create(Numeric.hexStringToByteArray(sha3Uncles)))
-    result.add(RlpString.create(Numeric.hexStringToByteArray(miner)))
-    result.add(RlpString.create(Numeric.hexStringToByteArray(stateRoot)))
-    result.add(RlpString.create(Numeric.hexStringToByteArray(transactionsRoot)))
-    result.add(RlpString.create(Numeric.hexStringToByteArray(receiptsRoot)))
-    result.add(RlpString.create(Numeric.hexStringToByteArray(logsBloom)))
-    result.add(RlpString.create(Numeric.hexStringToByteArray(difficultyRaw)))
-    result.add(RlpString.create(Numeric.hexStringToByteArray(numberRaw)))
-    result.add(RlpString.create(Numeric.hexStringToByteArray(gasLimitRaw)))
-    result.add(RlpString.create(Numeric.hexStringToByteArray(gasUsedRaw)))
-    result.add(RlpString.create(Numeric.hexStringToByteArray(timestampRaw)))
-    result.add(RlpString.create(Numeric.hexStringToByteArray(extraData)))
-    result.add(RlpString.create(Numeric.hexStringToByteArray(mixHash)))
-    result.add(RlpString.create(Numeric.hexStringToByteArray(nonceRaw)))
-    return RlpEncoder.encode(RlpList(result))
-}
-
 @Throws(Exception::class)
 fun main(args: Array<String>) {
     Application().run()

@@ -88,40 +88,5 @@ class ApplicationTest {
 //
 //        assertEquals(EXPECTED_PROOF, proof.toRlp())
 
-
-
-
     }
-}
-
-private fun TransactionReceipt.toRlp(): ByteArray {
-    val result = ArrayList<RlpType>()
-    result.add(RlpString.create(Numeric.hexStringToByteArray(status)))
-    result.add(RlpString.create(Numeric.hexStringToByteArray(cumulativeGasUsedRaw)))
-    result.add(RlpString.create(Numeric.hexStringToByteArray(logsBloom)))
-    result.add(RlpList(logs.map { it.toRlpType() }.toList()))
-    return RlpEncoder.encode(RlpList(result))
-}
-
-private fun Log.toRlpType(): RlpType {
-    val result = ArrayList<RlpType>()
-    result.add(RlpString.create(Numeric.hexStringToByteArray(address)))
-    result.add(RlpList(topics.map { RlpString.create(Numeric.hexStringToByteArray(it)) }.toList()))
-    result.add(RlpString.create(Numeric.hexStringToByteArray(data)))
-    return RlpList(result)
-}
-
-fun Transaction.toRlp(): ByteArray {
-    val result = ArrayList<RlpType>()
-    result.add(RlpString.create(Numeric.hexStringToByteArray(nonceRaw)))
-    result.add(RlpString.create(Numeric.hexStringToByteArray(gasPriceRaw)))
-    result.add(RlpString.create(Numeric.hexStringToByteArray(gasRaw)))
-    result.add(RlpString.create(Numeric.hexStringToByteArray(to)))
-    result.add(RlpString.create(Numeric.hexStringToByteArray(valueRaw)))
-    result.add(RlpString.create(Numeric.hexStringToByteArray(input)))
-    result.add(RlpString.create(Numeric.hexStringToByteArray(v.toString())))
-    result.add(RlpString.create(Numeric.hexStringToByteArray(r)))
-    result.add(RlpString.create(Numeric.hexStringToByteArray(s)))
-    result.add(RlpString.create(Numeric.hexStringToByteArray(hash)))
-    return RlpEncoder.encode(RlpList(result))
 }
