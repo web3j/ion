@@ -42,4 +42,4 @@ docs/build
 
 # OS X
 .DS_Store
-!/lib/pantheon-trie-1.0.1-SNAPSHOT.jar
+!/lib/trie-1.0.1-SNAPSHOT-all.jar

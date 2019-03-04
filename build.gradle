@@ -35,7 +35,7 @@ dependencies {
             "ch.qos.logback:logback-classic:$logbackVersion",
             "org.jetbrains.kotlin:kotlin-stdlib-jdk8",
             "org.web3j:core:4.1.1"
-    compile files('lib/pantheon-trie-1.0.1-SNAPSHOT.jar')
+    compile files('lib/trie-1.0.1-SNAPSHOT-all.jar')
     
     testCompile "junit:junit:$junitVersion"
 }
