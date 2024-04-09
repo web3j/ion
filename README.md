@@ -1,3 +1,7 @@
+# Archive Notice
+
+> This project is no longer under active development and has been archived. The repository is kept for historical purposes and read-only access. No further updates or pull requests will be considered.
+
 # web3j Sample Ion Project
 
 This project provides a very simple starter application for working with web3j and the [Ion Interoperability Framework](https://github.com/clearmatics/ion) using an Ethereum network (testnet) known as Rinkeby.
